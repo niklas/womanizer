@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
 class Womanizer
-  def self.ok!
-    $womanizer = Womanizer.new
+  def self.ok!(*a)
+    $womanizer = Womanizer.new(*a)
     $womanizer.define!
   end
 
