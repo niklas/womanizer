@@ -24,7 +24,7 @@ class Womanizer
             end
           end.join
           @enc[o] = t
-          @dec[t] = '%c' % [o]
+          @dec[t] = o
 
           debug { "#{o} => #{t}" }
         end
@@ -38,13 +38,15 @@ class Womanizer
   end
 
   def decode(encoded)
-    encoded.split(/\s+/).map { |t| @dec.fetch(t) }.join
+    encoded.split(/\s+/).map { |t| @dec.fetch(t) }.pack('C*').
+      force_encoding(Encoding.default_external)
   end
 
   def define!
     @dec.each do |t,c|
-      Kernel.send(:define_method, t) {|r=''| c+r }
+      Kernel.send(:define_method, t) {|r=''| [c].pack('C')+r }
     end
+    Kernel.send(:alias_method, 'ok', 'eval')
   end
 
 private
