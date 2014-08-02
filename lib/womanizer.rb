@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 
 class Womanizer
+  VERSION = '0.1.0'
+
   def self.ok!(*a)
     $womanizer = Womanizer.new(*a)
     $womanizer.define!
