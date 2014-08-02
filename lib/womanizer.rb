@@ -69,12 +69,12 @@ if $0 == __FILE__
   w = Womanizer.new
   case action = ARGV.shift
   when 'encode'
-    puts w.encode $<
+    puts w.encode $<.read
   when 'decode'
-    puts w.decode $<
+    puts w.decode $<.read
   when 'run'
     w.define!
-    eval $<
+    eval $<.read
   else
     raise ArgumentError, "bad action: #{action}, must be run, encode or decode"
   end
