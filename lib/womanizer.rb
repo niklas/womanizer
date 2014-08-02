@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 class Womanizer
   def initialize(words=['morewoman', 'morewomen'])
     words = words.map(&:downcase).uniq
@@ -34,7 +36,7 @@ class Womanizer
     end
   end
   def encode(source)
-    source.bytes.map { |b| @enc[b] }.join(' ')
+    source.each_byte.map { |b| @enc[b] }.join(' ')
   end
 
   def decode(encoded)
@@ -55,5 +57,20 @@ private
     if $DEBUG
       STDERR.puts yield
     end
+  end
+end
+
+if $0 == __FILE__
+  w = Womanizer.new
+  case action = ARGV.shift
+  when 'encode'
+    puts w.encode $<
+  when 'decode'
+    puts w.decode $<
+  when 'run'
+    w.define!
+    eval $<
+  else
+    raise ArgumentError, "bad action: #{action}, must be run, encode or decode"
   end
 end
