@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+
+$:.unshift File.expand_path('../../lib', __FILE__)
+require 'womanizer'
+w = Womanizer.new
+
+case action = ARGV.shift
+when 'encode'
+  puts w.encode $<.read
+when 'decode'
+  puts w.decode $<.read
+when 'run'
+  w.define!
+  eval $<.read
+else
+  raise ArgumentError, "bad action: #{action}, must be run, encode or decode"
+end
