@@ -41,6 +41,12 @@ class Womanizer
     encoded.split(/\s+/).map { |t| @dec.fetch(t) }.join
   end
 
+  def define!
+    @dec.each do |t,c|
+      Kernel.send(:define_method, t) {|r=''| c+r }
+    end
+  end
+
 private
 
   def debug
