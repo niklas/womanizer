@@ -1,6 +1,11 @@
 #!/usr/bin/env ruby
 
 class Womanizer
+  def self.ok!
+    $womanizer = Womanizer.new
+    $womanizer.define!
+  end
+
   def initialize(words=['morewoman', 'morewomen'])
     words = words.map(&:downcase).uniq
 
