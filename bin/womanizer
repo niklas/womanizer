@@ -2,7 +2,8 @@
 
 $:.unshift File.expand_path('../../lib', __FILE__)
 require 'womanizer'
-w = Womanizer.new
+word = ENV['WORD']
+w = word.nil? ? Womanizer.new : Womanizer.new(word)
 
 case action = ARGV.shift
 when 'encode'

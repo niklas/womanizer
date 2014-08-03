@@ -8,7 +8,8 @@ class Womanizer
     $womanizer.define!
   end
 
-  def initialize(words=['morewoman', 'morewomen'])
+  def initialize(*words)
+    words = ['morewoman', 'morewomen'] if words.empty?
     words = words.map(&:downcase).uniq
 
     raise ArgumentError, 'needs words with length of at least 8' if words.any? { |w| w.length < 8 }
