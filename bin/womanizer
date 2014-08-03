@@ -5,14 +5,19 @@ require 'womanizer'
 word = ENV['WORD']
 w = word.nil? ? Womanizer.new : Womanizer.new(word)
 
-case action = ARGV.shift
-when 'encode'
-  puts w.encode $<.read
-when 'decode'
-  puts w.decode $<.read
-when 'run'
+if ARGV.length == 1 # no action given, ie shebang
   w.define!
   eval $<.read
 else
-  raise ArgumentError, "bad action: #{action}, must be run, encode or decode"
+  case action = ARGV.shift
+  when 'encode'
+    puts w.encode $<.read
+  when 'decode'
+    puts w.decode $<.read
+  when 'run', nil, ''
+    w.define!
+    eval $<.read
+  else
+    raise ArgumentError, "bad action: #{action.inspect}, must be run, encode or decode"
+  end
 end
